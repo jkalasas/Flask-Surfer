@@ -14,6 +14,7 @@ setup(
     author="John Kyle Alas-as",
     author_email="alasasjohnkyle@gmail.com",
     url="https://github.com/jkalasas/Flask-Surfer",
+    download_url="https://github.com/jkalasas/Flask-Surfer/archive/refs/tags/0.0.1.tar.gz"
     long_description=__doc__,
     keywords=[
         "csrf",
