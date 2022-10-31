@@ -11,10 +11,6 @@ __all__ = ("CSRFProtection",)
 
 class CSRFProtection:
     def __init__(self, app: Flask = None) -> None:
-        self.app = app
-        if not app is None:
-            self.init_app(app)
-
         self.csrf_enabled: bool = True
         self.secret_key: bytes = None
         self.salt: bytes = None
@@ -24,6 +20,10 @@ class CSRFProtection:
         self._invalid_token: Callable = None
         self._exempted_views: list[str] = []
 
+        self.app = app
+        if not app is None:
+            self.init_app(app)
+
     def init_app(self, app: Flask) -> None:
         self.app = app
         app.extensions["csrf_protection"] = self
@@ -32,9 +32,28 @@ class CSRFProtection:
         self.load_config(app.config)
 
     def load_config(self, config: Config):
-        self.arg_names = config.get("CSRF_ARG_NAMES", ("CSRF_TOKEN", "csrf_token",))
-        self.cookie_names = config.get("CSRF_COOKIE_NAMES", ("CSRF_TOKEN", "csrf_token",))
-        self.header_names = config.get("CSRF_HEADER_NAMES", ("X-CSRF-TOKEN", "X-CSRF-Token", "x-csrf-token",))
+        self.arg_names = config.get(
+            "CSRF_ARG_NAMES",
+            (
+                "CSRF_TOKEN",
+                "csrf_token",
+            ),
+        )
+        self.cookie_names = config.get(
+            "CSRF_COOKIE_NAMES",
+            (
+                "CSRF_TOKEN",
+                "csrf_token",
+            ),
+        )
+        self.header_names = config.get(
+            "CSRF_HEADER_NAMES",
+            (
+                "X-CSRF-TOKEN",
+                "X-CSRF-Token",
+                "x-csrf-token",
+            ),
+        )
         self.csrf_enabled = config.get("CSRF_ENABLE", True)
         if not self.csrf_enabled:
             return
