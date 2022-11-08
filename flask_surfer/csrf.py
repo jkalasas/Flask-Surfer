@@ -51,6 +51,7 @@ class CSRFProtection:
             (
                 "X-CSRF-TOKEN",
                 "X-CSRF-Token",
+                "X-Csrf-Token",
                 "x-csrf-token",
             ),
         )
@@ -111,7 +112,6 @@ class CSRFProtection:
         self._exempted_views.append(view_location)
 
     def generate_tokens(self) -> tuple[bytes, str]:
-        print(self.salt, self.secret_key)
         token = self.merge_token(
             self.salt, self.secret_key, uuid4().hex.encode("utf-8")
         )
