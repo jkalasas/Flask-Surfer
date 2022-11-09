@@ -149,7 +149,8 @@ class CSRFProtection:
 
         return wrapper
 
-    def valid_token(self, token) -> bool:
+    @staticmethod
+    def valid_token(token) -> bool:
         server_token = session.get("_csrf_token")
 
         return md5(server_token.encode("utf-8")).hexdigest() == token
