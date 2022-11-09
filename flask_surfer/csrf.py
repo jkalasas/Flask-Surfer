@@ -101,7 +101,7 @@ class CSRFProtection:
         token = self.get_client_token()
         if token is None:
             return self.invalid_token_handler()
-        elif not self.valid_token(token):
+        if not self.valid_token(token):
             return self.invalid_token_handler()
 
     def exempt_view(self, view: str | Callable):
